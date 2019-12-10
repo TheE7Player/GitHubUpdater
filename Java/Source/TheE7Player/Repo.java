@@ -22,6 +22,8 @@ public class Repo {
             }
     */
 
+    //[NOTE] Setters are set to protected so they don't show when using the library (Used for GitHubUpdater function "SubSectionJson")
+
     private String Project_Name;
     private String Project_Full_Name;
     private String Project_URL;
@@ -38,7 +40,7 @@ public class Repo {
         return Project_Name;
     }
 
-    public void setProject_Name(String project_Name) {
+    protected void setProject_Name(String project_Name) {
         Project_Name = project_Name;
     }
 
@@ -46,7 +48,7 @@ public class Repo {
         return Project_Full_Name;
     }
 
-    public void setProject_Full_Name(String project_Full_Name) {
+    protected void setProject_Full_Name(String project_Full_Name) {
         Project_Full_Name = project_Full_Name;
     }
 
@@ -54,7 +56,7 @@ public class Repo {
         return Project_URL;
     }
 
-    public void setProject_URL(String project_URL) {
+    protected void setProject_URL(String project_URL) {
         Project_URL = project_URL;
     }
 
@@ -62,7 +64,7 @@ public class Repo {
         return Project_APIURL;
     }
 
-    public void setProject_APIURL(String project_APIURL) {
+    protected void setProject_APIURL(String project_APIURL) {
         Project_APIURL = project_APIURL;
     }
 
@@ -70,7 +72,7 @@ public class Repo {
         return Project_Description;
     }
 
-    public void setProject_Description(String project_Description) {
+    protected void setProject_Description(String project_Description) {
         Project_Description = project_Description;
     }
 
@@ -78,7 +80,7 @@ public class Repo {
         return Project_Language;
     }
 
-    public void setProject_Language(String project_Language) {
+    protected void setProject_Language(String project_Language) {
         Project_Language = project_Language;
     }
 
@@ -86,7 +88,7 @@ public class Repo {
         return Projects_Creation_Date;
     }
 
-    public void setProjects_Creation_Date(String projects_Creation_Date) {
+    protected void setProjects_Creation_Date(String projects_Creation_Date) {
         Projects_Creation_Date =  ParseDate(projects_Creation_Date);
     }
 
@@ -94,7 +96,7 @@ public class Repo {
         return Projects_Latest_Update_Date;
     }
 
-    public void setProjects_Latest_Update_Date(String projects_Latest_Update_Date) {
+    protected void setProjects_Latest_Update_Date(String projects_Latest_Update_Date) {
         Projects_Latest_Update_Date =  ParseDate(projects_Latest_Update_Date);
     }
 
@@ -102,7 +104,7 @@ public class Repo {
         return Projects_Latest_Push_Date;
     }
 
-    public void setProjects_Latest_Push_Date(String projects_Latest_Push_Date) {
+    protected void setProjects_Latest_Push_Date(String projects_Latest_Push_Date) {
         Projects_Latest_Push_Date = ParseDate(projects_Latest_Push_Date);
     }
 

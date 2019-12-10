@@ -3,6 +3,7 @@ import TheE7Player.*;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.List;
 
 public class testing {
@@ -18,7 +19,7 @@ public class testing {
         System.out.println("Test 4: Test_GetRelease()   ~       Testing to see if we can fetch current repos releases and it's information from the API");
         System.out.println("Test 5: Test_DirectSearch()   ~     Testing DirectSearch feature in Constructor for taking less rates (1 Direct fetch, ignoring 2 fetches)");
         boolean[] tests;
-        tests = new boolean[]{Test_GETREPOS(), Test_COMPAREVERISON(), Test_COMPARELESS() , Test_GetRelease(), Test_DirectSearch(), Test_DirectSearch()};
+        tests = new boolean[]{Test_GETREPOS(), Test_COMPAREVERISON(), Test_COMPARELESS() , Test_GetRelease(), Test_DirectSearch()};
         for (int i = 0; i < tests.length; i++) {
             System.out.println(String.format("Test %d -> %s", i + 1, tests[i]));
         }
@@ -49,7 +50,7 @@ public class testing {
             //Target Repo with name
             Repo target = udp.GetRepository("CSGO-Event-Viewer");
             String Update1 = "0.3";
-            String Update2 = "0.4.1"; //Same version as of 30/11/19
+            String Update2 = "0.4.2"; //Same version as of 10/12/19
             String Update3 = "0.7";
 
             //Project_APIURL <-
@@ -78,7 +79,7 @@ public class testing {
             //Target Repo with name
             Repo target = udp.GetRepository("CSGO-Event-Viewer");
             String Update1 = "0.3";
-            String Update2 = "0.4.1"; //Same version as of 30/11/19
+            String Update2 = "0.4.2"; //Same version as of 30/11/19
             String Update3 = "0.7";
 
             //Project_APIURL <-
@@ -145,11 +146,21 @@ public class testing {
 
     private static boolean Test_DirectSearch()
     {
-        try {
+        try
+        {
             GitHubFunctions udp = new GitHubFunctions("repos/TheE7Player/CSGO-Event-Viewer", GitHubUpdater.LogTypeSettings.LogWithError, true);
 
-            String[] Repos = udp.GetRepos();
+            //Since DirectSearch targets one project, use .GetRepostiory(0);
+            Repo Repos = udp.GetRepository(0);
 
+            if(Repos != null) //Ensure it isn't null before fetching information
+            {
+                String project_APILink = Repos.getProject_APIURL();
+                String project_Name = Repos.getProject_Name();
+                Date project_LastUpdate = Repos.getProjects_Latest_Update_Date(); //Requires: import java.util.Date;
+
+                System.out.println(String.format("Repo Name: %s\r\nRepo API Link: %s\r\nRepo Date (Updated): %s", project_Name, project_APILink, project_LastUpdate.toString()));
+            }
             return Repos != null;
         } catch (IOException e) {
             return false;
