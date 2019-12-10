@@ -14,13 +14,14 @@ For each API call you make, takes one
 Testing should be done for each update:
 ## Java
 Passed all tests (5/5) [10/12/19] (Can be found in testing.java)
-|Test Number| Test Function  | PASSED/FAILED |
-|:-:|:-:|:-:|
-| 1 | Test_GETREPOS       | ✔ |
-| 2 | Test_COMPAREVERISON | ✔ |
-| 3 | Test_COMPARELESS    | ✔ |
-| 4 | Test_GetRelease     | ✔ |
-| 5 | Test_DirectSearch   | ✔ |
+
+|Test Number|Test Function|PASSED/FAILED|
+|:---:|:---:|:---:|
+|1|Test_GETREPOS|✔|
+|2|Test_COMPAREVERISON|✔|
+|3|Test_COMPARELESS|✔|
+|4|Test_GetRelease|✔|
+|5|Test_DirectSearch|✔|
 
 
 # Retrieve Repo(s) from Username
