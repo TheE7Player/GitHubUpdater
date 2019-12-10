@@ -1,0 +1,8 @@
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\obj\Debug\netstandard2.0\GitHubUpdater.csproj.CoreCompileInputs.cache
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\obj\Debug\netstandard2.0\GitHubUpdater.AssemblyInfoInputs.cache
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\obj\Debug\netstandard2.0\GitHubUpdater.AssemblyInfo.cs
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\bin\Debug\netstandard2.0\GitHubUpdater.deps.json
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\bin\Debug\netstandard2.0\GitHubUpdater.dll
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\bin\Debug\netstandard2.0\GitHubUpdater.pdb
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\obj\Debug\netstandard2.0\GitHubUpdater.dll
+C:\Users\Owner\Source\Repos\GitHubUpdater\GitHubUpdater\obj\Debug\netstandard2.0\GitHubUpdater.pdb

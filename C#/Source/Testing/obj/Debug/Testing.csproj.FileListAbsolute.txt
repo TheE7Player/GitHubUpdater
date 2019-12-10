@@ -1,0 +1,10 @@
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\obj\Debug\Testing.csprojAssemblyReference.cache
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\obj\Debug\Testing.csproj.CoreCompileInputs.cache
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\bin\Debug\Testing.exe.config
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\bin\Debug\Testing.exe
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\bin\Debug\Testing.pdb
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\bin\Debug\GitHubUpdater.dll
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\bin\Debug\GitHubUpdater.pdb
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\obj\Debug\Testing.csproj.CopyComplete
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\obj\Debug\Testing.exe
+C:\Users\Owner\Source\Repos\GitHubUpdater\Testing\obj\Debug\Testing.pdb

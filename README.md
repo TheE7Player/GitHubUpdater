@@ -1,9 +1,10 @@
+
 # GitHubUpdater 
 **GitHubUpdater** is a library to allow coders to implement an updater for their projects using GitHub, easy.
 
 *Library is open to contributors to implement into their own programming language, please inform me so this project can expand!*
 
-(Java only at the moment, will expand in a bit)
+(Java and C# only at the moment, will expand in a bit)
 
 Here are the simplest ways of achieving them (v0.1):
 
@@ -23,10 +24,32 @@ Passed all tests (5/5) [10/12/19] (Can be found in testing.java)
 |4|Test_GetRelease|✔|
 |5|Test_DirectSearch|✔|
 
+##  C#
+Passed all tests (5/5) [10/12/19] (Can be found in C#\Source\Testing\Program.cs)
+|Test Number|Test Function|PASSED/FAILED|
+|:---:|:---:|:---:|
+|1|Test_GETREPOS|✔|
+|2|Test_COMPAREVERISON|✔|
+|3|Test_COMPARELESS|✔|
+|4|Test_GetRelease|✔|
+|5|Test_DirectSearch|✔|
 
 # Retrieve Repo(s) from Username
 
-## Java
+## Java & C#
+---
+### Note: 
+Java and C# almost have the same syntax but with a few differences:
+
+ - "String" should be "string" 
+ - "boolean" should be "bool"
+ - Change "!=" to "is" if using C# (Better comparison)
+
+Java and C# has the same library structure but the C# library uses properties:
+```
+ udp.GetUserName(); //Java get function
+ udp.Username; //C# get function, notice no brackets - It's a property!
+```
 ```java
 try   
 {  
