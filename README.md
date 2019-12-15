@@ -6,6 +6,8 @@
 
 (Java and C# only at the moment, will expand in a bit)
 
+More in-depth document is in the wiki, [here](https://github.com/TheE7Player/GitHubUpdater/wiki/GitHubUpdater-Wiki).
+
 Here are the simplest ways of achieving them (v0.1):
 
 # Information (Important!)
