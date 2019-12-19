@@ -167,7 +167,7 @@ if(r != null)
 	//Loop through "r" and store it into "a"
 	for (Release a : r)  
 	{
-		_files = a.getAssests(); //<- Get files from each release
+		_files = a.getAssets(); //<- Get files from each release
 		
 		System.out.println(String.format("Release: %s",a.getName()));  
 		System.out.println(String.format("└─ Tag: %s",a.getTag()));  
