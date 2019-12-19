@@ -8,6 +8,8 @@
 
 More in-depth document is in the wiki, [here](https://github.com/TheE7Player/GitHubUpdater/wiki/GitHubUpdater-Wiki).
 
+Library status cards are located: [here](https://github.com/TheE7Player/GitHubUpdater/projects/1).
+
 Here are the simplest ways of achieving them (v0.1):
 
 # Information (Important!)
