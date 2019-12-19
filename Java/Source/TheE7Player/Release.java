@@ -85,7 +85,7 @@ public class Release
         }
     }
 
-    public void AddAssest(Assets assets)
+    public void AddAsset(Assets assets)
     {
         if(r_Files == null)
             r_Files = new ArrayList<Assets>(1);
@@ -96,7 +96,7 @@ public class Release
             r_Files.add(assets);
     }
 
-    public List<Assets> getAssests()
+    public List<Assets> getAssets()
     {
         return (r_Files != null ) ? r_Files : null;
     }

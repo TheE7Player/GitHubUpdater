@@ -17,6 +17,8 @@ namespace TheE7Player
         }
         private static string FixVersion(string input)
         {
+            input = System.Text.RegularExpressions.Regex.Replace(input, "[^\\d.]", "");
+
             string VersionAfterDot = input.Substring(input.IndexOf(".")).Replace(".", "");
             string VersionBeforeDot = String.Format("{0}.", input.Substring(0, input.IndexOf(".")));
             return String.Format("{0}{1}", VersionBeforeDot, VersionAfterDot);

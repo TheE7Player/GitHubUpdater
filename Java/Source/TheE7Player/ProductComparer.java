@@ -1,11 +1,5 @@
 package TheE7Player;
 
-import sun.rmi.runtime.Log;
-
-import java.io.File;
-import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +112,9 @@ public class ProductComparer
 
     private static String FixVersion(String input)
     {
+        //Removes any letters (if any)
+        input = input.replaceAll("[^\\d.]", "");
+
         String VersionAfterDot = input.substring(input.indexOf(".")).replace(".", "");
         String VersionBeforeDot = String.format("%s.", input.substring(0, input.indexOf(".")));
 
@@ -178,7 +175,7 @@ public class ProductComparer
                         if(dl_Files != null && FindReleaseFiles) //Check if not null
                             if(dl_Files.size() > 0 && FindReleaseFiles) //Then check if we have any objects in the list
                                 for(int x = 0; x < dl_Files.size(); x++)
-                                    list.get(list.size() - 1).AddAssest(dl_Files.get(x));
+                                    list.get(list.size() - 1).AddAsset(dl_Files.get(x));
 
                         if(!list.get(list.size() - 1).parsedCorrectly)
                         {
