@@ -6,7 +6,7 @@
 
 (Java and C# only at the moment, will expand in a bit)
 
-More in-depth document is in the wiki, [here](https://github.com/TheE7Player/GitHubUpdater/wiki/GitHubUpdater-Wiki).
+More in-depth document is in the wiki, [here](https://github.com/TheE7Player/GitHubUpdater/wiki).
 
 Library status cards are located: [here](https://github.com/TheE7Player/GitHubUpdater/projects/1).
 
