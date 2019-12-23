@@ -1,14 +1,40 @@
 # githubupdater.py - Main logic behind the library
 
+import re  # Import pythons ReGex library (Pattern matching)
+
 # Python Library Dependencies
 from datetime import datetime  # Import time module
-import re  # Import pythons ReGex library (Pattern matching)
+from enum import Enum
 from typing import List
-import requests
 
 # Import the enums into the library
-from githubupdater.githubupdater_enum import APIStatus, LogTypeSettings, LogType
 from Classes.Repo import Repo
+
+
+# APIStatus - Enum for API events (Response feedback)
+class APIStatus(Enum):
+    none = 1
+    working = 2
+    max_fetch = 3
+    response_null = 4
+    match_fail = 5
+
+
+# LogTypeSettings - Enum which changes the log behaviour of the program
+class LogTypeSettings(Enum):
+    log_all = 1
+    log_with_error = 2
+    log_status_only = 3
+    log_error_only = 4
+    log_information_only = 5
+
+
+# LogType - Enum which goes along side LogTypeSettings, describes the status of the log
+class LogType(Enum):
+    error = 1
+    status = 2
+    information = 3
+
 
 _connected = False  # Assign it
 _messageShown = False  # Used in CallMaxFetchMessage()
@@ -17,9 +43,6 @@ _version = '0.1'  # Holds library version
 _next_window_reset: str = None
 _last_api_status = APIStatus.none
 _print_status = LogTypeSettings.log_with_error
-
-
-# TODO: Key Functions
 
 
 def __parse_date(self, _input: str):
@@ -80,7 +103,6 @@ def _safe_to_search() -> bool:
 
 
 def get_json_url(url: str) -> str:
-
     global _last_api_status
 
     try:
@@ -100,14 +122,115 @@ def get_json_url(url: str) -> str:
         return None
 
 
-# TODO: Implement subsection_json
-def subsection_json(lines: List[Repo]) -> None:
-    return None
+def subsection_json(lines: List[str]) -> List[str]:
+    new_list: List[Repo] = []
+    result: str = None
+    # Using different approach from Java/C# (Going to use dictionary to assign key variables)
+    n_repo = {"Name": None, "Full Name": None, "URL": None, "API": None, "Info": None, "Lang": None,
+              "Creation_Date": None, "Update_Date": None, "Push_Date": None}
+
+    for i in range(0, len(lines)):
+        if lines[i].startswith('['):
+            lines[i].replace('[', ' ').strip()
+
+        if lines[i].startswith("{\"id\""):
+            i += 1
+            while i < len(lines):
+                if _can_safely_jump((i + 1), len(lines)):
+                    if lines[i].endswith('}') and lines[i].startswith("{\"id\""):
+                        break
+                result = _get_value(lines[i])
+                if lines[i].startswith("\"owner\""):
+                    i += 18
+                    continue
+                if _can_safely_jump((i + 1), len(lines)):
+                    if result is None and lines[i].startswith("{\"id\""):
+                        break
+
+                if n_repo["Name"] is None and lines[i].startswith(_get_key("name")):
+                    n_repo["Name"] = result
+                    i += 1
+                    continue
+
+                if n_repo["Full Name"] is None and lines[i].startswith(_get_key("full_name")):
+                    n_repo["Full Name"] = result
+                    i += 1
+                    continue
+
+                if n_repo["URL"] is None and lines[i].startswith(_get_key("html_url")):
+                    n_repo["URL"] = result
+                    i += 1
+                    continue
+
+                if n_repo["API"] is None and lines[i].startswith(_get_key("url")):
+                    n_repo["API"] = result
+                    i += 1
+                    continue
+
+                if n_repo["Info"] is None and lines[i].startswith(_get_key("description")):
+                    n_repo["Info"] = result
+                    i += 1
+                    continue
+
+                if n_repo["Lang"] is None and lines[i].startswith(_get_key("language")):
+                    n_repo["Lang"] = result
+                    i += 1
+                    continue
+
+                if n_repo["Creation_Date"] is None and lines[i].startswith(_get_key("created_at")):
+                    n_repo["Creation_Date"] = result
+                    i += 1
+                    continue
+
+                if n_repo["Update_Date"] is None and lines[i].startswith(_get_key("updated_at")):
+                    n_repo["Update_Date"] = result
+                    i += 1
+                    continue
+
+                if n_repo["Push_Date"] is None and lines[i].startswith(_get_key("pushed_at")):
+                    n_repo["Push_Date"] = result
+                    i += 1
+                    continue
+
+                i += 1
+
+            # Now we port it into a repo
+            new_repo = Repo(n_repo["Name"], n_repo["Full Name"], n_repo["URL"], n_repo["API"], n_repo["Info"],
+                            n_repo["Lang"], n_repo["Creation_Date"], n_repo["Update_Date"], n_repo["Push_Date"])
+
+            if not new_repo.successful_find():
+                log("ERROR - One or more fields failed to be assigned!", LogType.error)
+                break
+            else:
+                log(f"Success! \"{new_repo.full_name}\" has been found and assigned to!", LogType.information)
+                new_list.append(new_repo)
+                del new_repo
 
 
 # TODO: Implement get_json_response
 def get_json_response(url: str) -> List[str]:
-    pass
+    import requests
+    from requests.exceptions import MissingSchema
+
+    result: List[str] = []
+    try:
+        # Get the url response, and convert the byte stream to a string (__str__())
+        response = requests.get(url).content.__str__()
+
+        # Now we get rid of b'' starting
+        response = response[2:]
+
+        # Now we split the string into sub-sections from where ',' is in each line
+        response_arr = response.split(',')
+
+        # Now we iterate it through into result
+        for line in response_arr:
+            result.append(line)
+
+        return result
+    except (ValueError, Exception, MissingSchema) as e:
+        log(f"ERROR - NO CONNECTION: {e}", LogType.error)
+        return None
 
 
 def valid_url(url: str) -> bool:

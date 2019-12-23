@@ -5,6 +5,8 @@ import datetime  # Import time module for "__parse_date"
 
 class Repo:
     _parsedFailed = False
+    name: str = None
+    full_name: str = None
 
     def __parse_date(self, _input: str):
         # https://stackabuse.com/converting-strings-to-datetime-in-python/
@@ -13,8 +15,8 @@ class Repo:
 
     def __init__(self, Name: str, Full_Name: str, URL: str, API_URL: str, Description: str, Language: str,
                  Creation_Date: str, Latest_Date: str, Latest_Push: str):
-        self.__project_name = Name
-        self.__project_full_name = Full_Name
+        self.name = Name
+        self.full_name = Full_Name
         self.__project_url = URL
         self.__project_apiurl = API_URL
         self.__project_description = Description
