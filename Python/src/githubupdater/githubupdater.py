@@ -306,7 +306,7 @@ def _get_reset_limit_date() -> str:
     return _next_window_reset
 
 
-def _can_safely_jump(index: int, arr_size: int) -> bool:
+def can_safely_jump(index: int, arr_size: int) -> bool:
     return index < arr_size
 
 
