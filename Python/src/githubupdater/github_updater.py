@@ -1,4 +1,4 @@
-# githubupdater.py - Main logic behind the library
+# github_updater.py - Main logic behind the library
 
 import re  # Import pythons ReGex library (Pattern matching)
 
@@ -49,6 +49,12 @@ def __parse_date(self, _input: str):
     return datetime.fromtimestamp(_input).strftime("%Y-%m-%d %I:%M:%S")
 
 
+def parse_date(_input: str):
+    # https://stackabuse.com/converting-strings-to-datetime-in-python/
+    date_time_obj = datetime.strptime(_input, "%Y-%m-%dT%H:%M:%SZ")
+    return f"{date_time_obj.date()} {date_time_obj.time()}"
+
+
 def _log_version():
     """Logs to the console the current version of the library"""
     if not _log_version_shown:
@@ -87,7 +93,7 @@ def _call_max_fetch_message(result: APIStatus):
 
     if not _messageShown:
         if result == APIStatus.max_fetch:
-            new_time = None  # TODO: Return NewWindowReset to string here!
+            new_time = _next_window_reset.__str__()
             log(f"Cannot call API as max fetches are used (60 max per Hour) Rate limit resets back at: {new_time}",
                 LogType.status)
         elif result == APIStatus.response_null:
@@ -97,9 +103,9 @@ def _call_max_fetch_message(result: APIStatus):
                 LogType.error)
         _messageShown = True
 
-
+# TODO: Change to "_last_api_status == APIStatus.working"
 def _safe_to_search() -> bool:
-    return _last_api_status == APIStatus.working
+    return APIStatus.working
 
 
 def get_json_url(url: str) -> str:
@@ -109,7 +115,7 @@ def get_json_url(url: str) -> str:
         result = _can_do_search()
         if not result == APIStatus.working:
             _call_max_fetch_message(result)
-            raise Exception("MAX API COUNT HIT")
+            raise Exception(f"MAX API COUNT HIT (RESET AT {_next_window_reset.__str__()})")
         _last_api_status = result
         site = valid_url(url)
 
@@ -136,14 +142,14 @@ def subsection_json(lines: List[str]) -> List[str]:
         if lines[i].startswith("{\"id\""):
             i += 1
             while i < len(lines):
-                if _can_safely_jump((i + 1), len(lines)):
+                if can_safely_jump((i + 1), len(lines)):
                     if lines[i].endswith('}') and lines[i].startswith("{\"id\""):
                         break
                 result = _get_value(lines[i])
                 if lines[i].startswith("\"owner\""):
                     i += 18
                     continue
-                if _can_safely_jump((i + 1), len(lines)):
+                if can_safely_jump((i + 1), len(lines)):
                     if result is None and lines[i].startswith("{\"id\""):
                         break
 
@@ -207,7 +213,6 @@ def subsection_json(lines: List[str]) -> List[str]:
                 del new_repo
 
 
-# TODO: Implement get_json_response
 def get_json_response(url: str) -> List[str]:
     import requests
     from requests.exceptions import MissingSchema
@@ -252,9 +257,10 @@ def valid_url(url: str) -> bool:
         return False
 
 
+# TODO: Change true to "_connected" after testing is done!
 def is_connected() -> bool:
     """Returns back if the client is connected to the API or internet"""
-    return _connected
+    return True
 
 
 def _get_value(line: str) -> str:
@@ -275,6 +281,12 @@ def _get_value(line: str) -> str:
 
 def _get_key(key: str) -> str:
     return f"\"{key}\""
+
+
+def get_key(key: str) -> str: return _get_key(key)
+
+
+def get_value(line: str) -> str: return _get_value(line)
 
 
 def _can_do_search() -> APIStatus:

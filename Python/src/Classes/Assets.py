@@ -18,15 +18,15 @@ class Asset:
 
     def item_size(self):
         """Returns the files size in bytes (Use get_item_size to convert to KB, MB or GB)"""
-        return self.__item_size;
+        return self.__item_size
 
     def item_name(self):
         """Returns the items file name"""
-        return self.__item_name;
+        return self.__item_name
 
     def item_url(self):
         """Returns the downloadable url link of the file"""
-        return self.__item_download_url;
+        return self.__item_download_url
 
     def get_item_size(self, size_type: DisplaySize = DisplaySize.Megabytes) -> str:
         """

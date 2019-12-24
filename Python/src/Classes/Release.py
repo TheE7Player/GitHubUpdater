@@ -1,7 +1,7 @@
 # Release.py - Handles the release(s) information
 
 import datetime  # Import time module for "__parse_date"
-from Assets import Asset  # Import Assets.py into Release.py
+from Classes.Assets import Asset  # Import Assets.py into Release.py
 
 
 class Release:
@@ -10,6 +10,19 @@ class Release:
         # https://stackabuse.com/converting-strings-to-datetime-in-python/
         date_time_obj = datetime.datetime.strptime(_input, "%Y-%m-%dT%H:%M:%SZ")
         return f"{date_time_obj.date()} {date_time_obj.time()}"
+
+    def to_dict(self):
+        return dict({
+            "Name": self._Name,
+            "Tag": self._Tag,
+            "URL": self._URL,
+            "Description": self._Info,
+            "Creation Date": self._Created,
+            "Published Date": self._Published,
+            "Is PreRelease": self._isPreRelease,
+            "Parsed Successfully": self._parsedCorrectly,
+            "Assets": self._Assets
+        })
 
     def __init__(self, result: list):
 

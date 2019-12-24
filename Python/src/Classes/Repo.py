@@ -30,9 +30,6 @@ class Repo:
         except (ValueError, Exception):
             _parsedFailed = True
 
-    def successful_find(self) -> bool:
-        return not self._parsedFailed
-
 
 ''' TESTING GOES HERE
 e = Repo("CSGO-Event-Viewer", "TheE7Player/CSGO-Event-Viewer", "https://github.com/TheE7Player/CSGO-Event-Viewer",
