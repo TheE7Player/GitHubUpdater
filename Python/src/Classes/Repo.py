@@ -7,6 +7,7 @@ class Repo:
     _parsedFailed = False
     name: str = None
     full_name: str = None
+    api_link: str = None
 
     def __parse_date(self, _input: str):
         # https://stackabuse.com/converting-strings-to-datetime-in-python/
@@ -18,7 +19,7 @@ class Repo:
         self.name = Name
         self.full_name = Full_Name
         self.__project_url = URL
-        self.__project_apiurl = API_URL
+        self.api_link = API_URL
         self.__project_description = Description
         self.__project_language = Language
         try:
