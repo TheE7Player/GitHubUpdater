@@ -64,11 +64,11 @@ namespace TheE7Player
 
         public int getAPIFetchCount()
         {
-            string[] responce = GetJsonResponse("https://api.github.com/rate_limit");
+            string[] response = GetJsonResponse("https://api.github.com/rate_limit");
 
-            if (responce == null) return -1;
+            if (response == null) return -1;
 
-            foreach (string line in responce)
+            foreach (string line in response)
             {
                 if (line.Contains("\"remaining\":"))
                 {

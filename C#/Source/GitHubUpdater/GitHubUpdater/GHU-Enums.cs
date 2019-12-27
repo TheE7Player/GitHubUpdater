@@ -25,9 +25,9 @@ namespace TheE7Player
         */
 
         /// <summary>
-        /// Enum for API events (Responce feedback)
+        /// Enum for API events (Response feedback)
         /// </summary>
-        public enum APIStatus { None, Working, Max_Fetch, Responce_Null, Match_Fail }
+        public enum APIStatus { None, Working, Max_Fetch, Response_Null, Match_Fail }
 
         /// <summary>
         /// Change the log behaviour of the program

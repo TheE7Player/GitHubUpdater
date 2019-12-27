@@ -27,10 +27,9 @@ namespace TheE7Player
         #endregion
 
         #region Variables/Fields
-        private static bool _LogVersion = true;
         private static bool LogVersionShown = false;
         private static DateTime NextWindowReset;
-        protected static string Version = "0.1";
+        protected static string Version = "0.2";
         protected static bool DirectSearch = false; //<- Important: Encase they use a feature which requires repo to be initialized. For error tracing, good to know what the last API status was.
         protected static APIStatus lastAPIStatus = APIStatus.None;
         private static LogTypeSettings printStatus = LogTypeSettings.LogWithError;
@@ -133,14 +132,14 @@ namespace TheE7Player
             WebClient webClient = null;
             try
             {
-                //Put the responce from the API into result
+                //Put the response from the API into result
                 using (webClient = new WebClient())
                 {
                     try
                     {
                         webClient.Headers.Add("User-Agent: Other");
-                        string responce = webClient.DownloadString(url);
-                        result = responce.Split(',');
+                        string response = webClient.DownloadString(url);
+                        result = response.Split(',');
                         return result;
 
                     }
@@ -214,7 +213,7 @@ namespace TheE7Player
                 Connected = true;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Log("ERROR - NO CONNECTION", LogType.Error);
                 Connected = false;
@@ -226,7 +225,7 @@ namespace TheE7Player
 
         #region Methods
         ///// <summary>
-        ///// Logs the librarys version on first time launch
+        ///// Logs the libraries version on first time launch
         ///// </summary>
         //private static void _LogVersion()
         //{
@@ -251,7 +250,7 @@ namespace TheE7Player
                     string newTime = NextWindowReset.ToString();
                     Log($"Cannot call API as max fetches are used (60 max per Hour) Rate limit resets back at: {newTime}", LogType.Status);
                 }
-                else if (result == APIStatus.Responce_Null)
+                else if (result == APIStatus.Response_Null)
                 {
                     Log("Issue with feedback from response to API, connection may be down or problem with link", LogType.Error);
                 }
@@ -266,7 +265,8 @@ namespace TheE7Player
 
         private static void LogVersion()
         {
-            if (_LogVersion && !LogVersionShown)
+            //TODO: Use one variable only!!
+            if (!LogVersionShown)
             {
                 Console.WriteLine($"RUNNING GitHubUpdater (C#) version: {Version}");
                 LogVersionShown = true;
@@ -279,7 +279,7 @@ namespace TheE7Player
         /// <summary>
         /// Logs messages from the classes and allows prioritisation for messages
         /// </summary>
-        /// <param name="message">The message to dispaly to console</param>
+        /// <param name="message">The message to display to console</param>
         /// <param name="mType">Message type (Is it an error, information etc?)</param>
         internal static void Log(String message, LogType mType)
         {
@@ -324,7 +324,7 @@ namespace TheE7Player
 
         private void Init()
         {
-            string user = GetAPIReposLink();
+            string user = String.Join("", new object[] { "https://api.github.com/users/", this.username, "/repos" });
 
             Log("LINK SETUP COMPLETE, ATTEMPTING TO CONNECT TO GITHUB API", LogType.Information);
 
@@ -342,11 +342,9 @@ namespace TheE7Player
             Repos = SubSectionJson(Lines);
         }
 
-        private void Direct_Init(string Username)
+        private void Direct_Init(string link)
         {
-            //https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
-            //String user = GetAPIReposLink();
-            string directLink = String.Join(String.Empty, new object[] { "https://api.github.com/", Username });
+            string directLink = String.Join(String.Empty, new object[] { "https://api.github.com/", link });
 
             Log("LINK SETUP COMPLETE, ATTEMPTING TO CONNECT TO GITHUB API", LogType.Information);
 
@@ -376,15 +374,15 @@ namespace TheE7Player
             if (!matcher.Success) return String.Empty;
             else
             {
-                string repond = matcher.Groups[1].Value;
+                string respond = matcher.Groups[1].Value;
 
-                if (repond.Contains("\""))
-                    repond = repond.Replace("\"", "").Trim();
+                if (respond.Contains("\""))
+                    respond = respond.Replace("\"", "").Trim();
 
-                if (repond.Contains(","))
-                    repond = repond.Replace(",", "").Trim();
+                if (respond.Contains(","))
+                    respond = respond.Replace(",", "").Trim();
 
-                return repond;
+                return respond;
             }
         }
 
@@ -398,6 +396,7 @@ namespace TheE7Player
             return $"\"{key}\"";
         }
 
+        [Obsolete("Method will be destoryed in version 1.1, not needed")]
         internal string GetAPIReposLink()
         {
             return String.Join("", new object[] { "https://api.github.com/users/", this.username, "/repos" });
@@ -407,11 +406,11 @@ namespace TheE7Player
 
         internal static APIStatus CanDoSearch()
         {
-            string[] responce = GetJsonResponse("https://api.github.com/rate_limit");
+            string[] response = GetJsonResponse("https://api.github.com/rate_limit");
 
-            if (responce is null) return APIStatus.Responce_Null;
+            if (response is null) return APIStatus.Response_Null; //<- Fix spelling here in ENUM
 
-            foreach (string line in responce)
+            foreach (string line in response)
             {
                 if (line.Contains("\"remaining\":"))
                 {
@@ -420,7 +419,7 @@ namespace TheE7Player
                         string Amount = line.Substring(line.IndexOf(":") + 1);
                         int n_Amount = Convert.ToInt32(Amount);
                         int n_AmountNew = ((n_Amount - 1) > 0) ? (n_Amount - 1) : 0;
-                        string resetDate = responce[2].Substring(responce[2].IndexOf(":") + 1).Replace("}", "");
+                        string resetDate = response[2].Substring(response[2].IndexOf(":") + 1).Replace("}", "");
 
                         //Converting UTC to current time: https://stackoverflow.com/a/7844741
                         var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -434,7 +433,7 @@ namespace TheE7Player
 
 
                     }
-                    catch (Exception SIE)
+                    catch (Exception)
                     {
                         return APIStatus.Match_Fail;
                     }
